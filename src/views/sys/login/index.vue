@@ -62,6 +62,11 @@ export default {
             })
             this.$router.push('/home')
           })
+        } else {
+          this.$notify({
+            type: 'warning',
+            message: '验证失败'
+          })
         }
       })
     },

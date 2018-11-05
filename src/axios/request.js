@@ -53,7 +53,7 @@ service.interceptors.response.use(
             // 此处还存在后台自定义错误码，可以处理
             Message({
               type: 'error',
-              message: '服务器内部错误'
+              message: '服务器内部错误：' + response.data
             })
             reject(data)
             break
