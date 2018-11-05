@@ -1,6 +1,6 @@
 # sso-front
 
-> A Vue.js project
+> [sso](https://github.com/FlowersPlants/sso)项目前端框架，目前只是一个空架子，仅登录登出可用
 
 ## Build Setup
 
@@ -18,6 +18,11 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### 简介
 
-可查看[vue前端框架搭建](https://blog.csdn.net/xiaoping_1988/article/details/78768845)
+
+### 功能和模块
+
+
+### 参考文档
+* 可查看[vue前端框架搭建](https://blog.csdn.net/xiaoping_1988/article/details/78768845)
