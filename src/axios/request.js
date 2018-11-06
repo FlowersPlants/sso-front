@@ -50,11 +50,21 @@ service.interceptors.response.use(
         // 此处处理具体的错误，如401、403、500
         switch (response.status) {
           case 500:
-            // 此处还存在后台自定义错误码，可以处理
-            Message({
-              type: 'error',
-              message: '服务器内部错误：' + response.data
-            })
+            if (data.code === 500) {
+              // 运行时异常(所有的RuntimeException)
+              Message({
+                message: `运行时异常: ${data.code} ${data.data}`,
+                type: 'error',
+                duration: 3 * 1000
+              })
+            } else {
+              // 业务异常
+              Message({
+                message: `业务异常: ${data.data}`,
+                type: 'error',
+                duration: 3 * 1000
+              })
+            }
             reject(data)
             break
           case 403:
