@@ -22,13 +22,11 @@ Vue.use(Router)
 export const constRouterMap = [
   {
     path: '/404',
-    meta: { icon: '404', name: '404' },
     component: () => import('@/views/error/404'),
     hidden: true
   },
   {
     path: '/401',
-    meta: { icon: 'bug', name: '401' },
     component: () => import('@/views/error/401'),
     hidden: true
   },
@@ -39,8 +37,7 @@ export const constRouterMap = [
   },
   {
     path: '/home',
-    component: Layout,
-    name: 'home'
+    component: Layout
   }
 ]
 
