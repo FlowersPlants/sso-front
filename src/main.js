@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './authController' // 权限控制
 
 import './assets/css/common.css'
 

@@ -18,7 +18,7 @@ export function login (params) {
  */
 export function logout () {
   return request({
-    url: `/logout`,
+    url: `/auth/logout`,
     method: 'delete'
   })
 }

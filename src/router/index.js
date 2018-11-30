@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/components/Layout'
-import Login from '@/views/sys/login/index'
+import Login from '@/views/sys/login'
 
 Vue.use(Router)
 
@@ -30,13 +30,21 @@ export const constRouterMap = [
     component: () => import('@/views/error/401'),
     hidden: true
   },
+  // {
+  //   path: '/',
+  //   hidden: true,
+  //   component: Login,
+  //   props: true
+  // },
   {
-    path: '/', // 登录页面
+    path: '/login',
     hidden: true,
-    component: Login
+    component: Login,
+    props: true
   },
   {
     path: '/home',
+    name: '首页',
     component: Layout
   }
 ]

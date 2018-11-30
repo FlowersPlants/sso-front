@@ -1,11 +1,12 @@
-import {login as UserLogin, logout} from '@/views/sys/login/api'
+import { login as UserLogin, logout } from '@/views/sys/login/api'
+import { getUserInfo } from '@/views/sys/user/api'
 
 const user = {
   state: {
-    isLogin: undefined,
+    isLogin: false,
     token: undefined,
     info: undefined,
-    menus: [],
+    menus: undefined,
     roles: []
   },
 
@@ -25,20 +26,20 @@ const user = {
     SET_TOKEN: (state, token) => {
       if (token) {
         state.token = token
-        localStorage.setItem('DbToken', token)
+        localStorage.setItem('JwtToken', token)
         state.isLogin = true
       } else {
         state.token = undefined
-        localStorage.removeItem('DbToken')
+        localStorage.removeItem('JwtToken')
         state.isLogin = false
       }
     }
   },
 
   actions: {
-    login ({commit}, data) {
+    login ({ commit }, data) {
       return new Promise((resolve, reject) => {
-        UserLogin(data).then(({data}) => {
+        UserLogin(data).then(({ data }) => {
           console.log('login resp  ', data)
           commit('SET_ISLOGIN', true)
           commit('SET_TOKEN', data.data)
@@ -49,37 +50,32 @@ const user = {
         })
       })
     },
-    // // 获取用户信息
-    // GetUserInfo ({commit}) {
-    //   return new Promise((resolve, reject) => {
-    //     getUserInfo()
-    //       .then(response => {
-    //         if (!response.data) {
-    //           // 由于mockjs 不支持自定义状态码只能这样hack
-    //           // reject('error')
-    //           reject(new Error('error'))
-    //         }
-    //         const res = response.data.data
-    //         commit('SET_ROLES', res.roles)
-    //         commit('SET_INFO', res.info)
-    //         commit('SET_MENUS', res.menus)
-
-    //         if (res.perms) {
-    //           const codeList = res.perms.map(it => {
-    //             return it.code
-    //           })
-    //           commit('SET_PERMS', codeList)
-    //         }
-
-    //         resolve(response)
-    //       })
-    //       .catch(error => {
-    //         reject(error)
-    //       })
-    //   })
-    // },
-    CheckLogin ({commit}) {
-      let token = localStorage.getItem('DbToken')
+    // 获取用户信息
+    GetUserInfo ({ commit }) {
+      return new Promise((resolve, reject) => {
+        getUserInfo()
+          .then(response => {
+            if (!response.data) {
+              reject(new Error('error'))
+            }
+            const res = response.data.data
+            console.log('obtain user info => ', res)
+            commit('SET_ROLES', res.roles)
+            commit('SET_INFO', res.info)
+            commit('SET_MENUS', res.menus)
+            resolve(response)
+          })
+          .catch(error => {
+            commit('SET_ISLOGIN', false)
+            reject(error)
+          })
+      })
+    },
+    ClearToken ({commit}) {
+      commit('SET_TOKEN')
+    },
+    CheckLogin ({ commit }) {
+      let token = localStorage.getItem('JwtToken')
       if (token) {
         commit('SET_TOKEN', token)
       } else {
@@ -87,21 +83,20 @@ const user = {
       }
     },
     // 登出
-    LogOut ({commit}) {
+    LogOut ({ commit }) {
       return new Promise((resolve, reject) => {
-        logout()
-          .then(() => {
-            commit('SET_ROLES', [])
-            // commit('SET_PERMS', [])
-            commit('SET_ISLOGIN', false)
-            commit('SET_INFO', undefined)
-            commit('SET_MENUS', undefined)
-            // removeToken()
-            resolve()
-          })
-          .catch(error => {
-            reject(error)
-          })
+        commit('SET_ROLES', [])
+        // commit('SET_PERMS', [])
+        commit('SET_ISLOGIN', false)
+        commit('SET_INFO', undefined)
+        commit('SET_MENUS', undefined)
+        commit('SET_TOKEN', undefined)
+        logout().then(() => {
+          console.log('logout success.')
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
       })
     }
   }

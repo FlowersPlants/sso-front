@@ -15,7 +15,7 @@
                         <el-input type="password" v-model="form.pwd" placeholder="密码"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="handleLogin('loginForm')">登录</el-button>
+                        <el-button type="primary" @click.native="handleLogin('loginForm')">登录</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -61,6 +61,7 @@ export default {
               duration: 3000
             })
             this.$router.push('/home')
+            // this.$store.dispatch('GetUserInfo').then(res => console.log(res))
           })
         } else {
           this.$notify({

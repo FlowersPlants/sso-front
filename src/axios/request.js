@@ -1,14 +1,14 @@
 import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
-// import CFG from '@/utils/cfg'
+import CFG from '@/utils/cfg'
 import {Message, MessageBox} from 'element-ui'
 
 /**
  * 创建axios实例
  */
 const service = axios.create({
-  baseURL: `http://localhost:8899/`, // api的base_url
+  baseURL: `${CFG.URL('BASE_API')}`, // api的base_url
   timeout: 500000, // request timeout
   withCredentials: true, // 跨域请求时是否需要凭证，默认false
   maxRedirects: 0
@@ -20,7 +20,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     config.headers.post['X-Requested-With'] = 'XMLHttpRequest'
-    // config.headers['Authorization'] = store.getters.token
+    config.headers['Authorization'] = store.getters.token
     return config
   },
   error => {
@@ -83,7 +83,7 @@ service.interceptors.response.use(
             break
           case 401:
             // 检查是否登录
-            store.dispatch('CheckLogin')
+            store.dispatch('ClearToken')
             MessageBox.alert(`未登录或凭证过期,请重新登陆!`, `错误`, {
               confirmButtonText: '登录',
               showCancelButton: false,
