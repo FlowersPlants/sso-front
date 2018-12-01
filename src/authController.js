@@ -1,17 +1,11 @@
 import router from '@/router'
 import store from '@/store'
-// import NProgress from 'nprogress' // progress bar
-// import 'nprogress/nprogress.css' // progress bar style
 import CFG from '@/utils/cfg'
 import { initUserRouter } from '@/store/actions/sys'
-
-// NProgress.configure({showSpinner: false});// NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
-  // NProgress.start(); // start progress bar
-
   const meta = to.meta
   // const value = to.query.src ? to.query.src : to.path
   const label = to.query.name ? to.query.name : meta.title
@@ -50,11 +44,7 @@ router.beforeEach((to, from, next) => {
   } else if (!store.getters.userInfo) {
     initUserRouter(to, from, next)
   } else {
-    // if (store.getters.isLock && to.path !== '/lock') {
-    //   next({ path: '/lock' })
-    // } else {
     next()
-    // }
   }
 })
 
@@ -63,5 +53,4 @@ router.afterEach(() => {
 })
 
 console.log('store=>', store)
-
 store.dispatch('CheckLogin')

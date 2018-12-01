@@ -9,7 +9,7 @@
       <!-- 用户名 -->
       <el-dropdown>
         <span class="el-dropdown-link navbar-item">
-          {{userInfo.username}}
+          {{userInfo.name}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -32,15 +32,15 @@ export default {
   components: { NavMenu },
   data () {
     return {
-      userInfo: {
-        username: undefined
-      }
+      // userInfo: {
+      // username: undefined
+      // }
     }
   },
   created () {},
   computed: {
     ...mapState({
-      // userInfo: state => state.user.info
+      userInfo: state => state.user.info
     }),
     ...mapGetters(['webInfo'])
   },
