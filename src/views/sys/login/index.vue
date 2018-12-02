@@ -8,10 +8,10 @@
     <el-main>
       <div class="login-container">
         <el-form class="login-form" :model="form" :rules="rules" ref="loginForm" label-position="right" label-width="80px">
-          <el-form-item label="用户名" prop="username">
+          <el-form-item label="用户名" prop="account">
             <el-input v-model="form.account" autoComplete="on" placeholder="请输入用户名"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
+          <el-form-item label="密码" prop="pwd">
             <el-input type="password" v-model="form.pwd" placeholder="密码" @keyup.enter.native="handleLogin('loginForm')"></el-input>
           </el-form-item>
           <el-form-item>
@@ -35,7 +35,7 @@ export default {
       form: {
         account: undefined,
         pwd: undefined,
-        rememberMe: false
+        rememberMe: false // 记住我功能暂无
       },
       rules: {
         name: [{required: true, message: '请输入账号'}]
@@ -47,21 +47,18 @@ export default {
   },
   methods: {
     init () {
-      console.log('login from reset.')
       this.resetForm()
     },
     handleLogin (loginForm) {
       this.$refs[loginForm].validate((valid) => {
         if (valid) {
           this.$store.dispatch('login', this.form).then(res => {
-            console.log(res)
             this.$notify({
               type: 'success',
               message: '登录成功',
               duration: 3000
             })
             this.$router.push('/home')
-            // this.$store.dispatch('GetUserInfo').then(res => console.log(res))
           })
         } else {
           this.$notify({
