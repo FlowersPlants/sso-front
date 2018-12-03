@@ -28,3 +28,16 @@ export default {
   }
 }
 </script>
+
+<style>
+.index {
+  display: flex;
+  display: -webkit-flex;
+}
+.left {
+  width: 240px;
+}
+.right {
+  width: 100%;
+}
+</style>

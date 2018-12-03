@@ -53,3 +53,13 @@ export default {
   }
 }
 </script>
+
+<style>
+.navbar {
+  display: flex;
+  display: -webkit-flex;
+}
+.navbar-title {
+  width: 100%;
+}
+</style>

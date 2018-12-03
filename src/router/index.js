@@ -46,6 +46,34 @@ export const constRouterMap = [
     path: '/home',
     name: '首页',
     component: Layout
+  },
+  {
+    path: '/sys',
+    name: 'sys',
+    meta: {
+      name: '系统管理',
+      icon: ''
+    },
+    children: [
+      {
+        path: 'user',
+        name: 'user',
+        meta: {
+          name: '用户管理',
+          icon: ''
+        },
+        component: () => import('@/views/sys/user')
+      },
+      {
+        path: 'role',
+        name: 'role',
+        meta: {
+          name: '角色管理',
+          icon: ''
+        },
+        component: () => import('@/views/sys/role')
+      }
+    ]
   }
 ]
 
