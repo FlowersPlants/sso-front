@@ -20,7 +20,7 @@ import { MessageBox } from 'element-ui'
 export function initUserRouter (to, form, next) {
   if (!store.getters.userInfo) {
     store.dispatch('GetUserInfo').then(() => {
-      store.dispatch('GenerateRoutes', store.getters.userMenu).then(() => {
+      store.dispatch('GenerateRoutes', store.getters.userMenus).then(() => {
         router.addRoutes(store.getters.addRouters)
         next({...to, replace: true})
         // initGlobalData().then(() => {

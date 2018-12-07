@@ -5,19 +5,9 @@ import Login from '@/views/sys/login'
 
 Vue.use(Router)
 
-// 默认创建路由的方式
-// export default new Router({
-//   routes: [
-//     {
-//       path: '/',
-//       name: 'login',
-//       component: Login
-//     }
-//   ]
-// })
-
 /**
  * 静态路由配置
+ * 暂目前静态路由还有问题，此路由配置没有使用
  */
 export const constRouterMap = [
   {
@@ -30,45 +20,46 @@ export const constRouterMap = [
     component: () => import('@/views/error/401'),
     hidden: true
   },
-  // {
-  //   path: '/',
-  //   hidden: true,
-  //   component: Login,
-  //   props: true
-  // },
   {
     path: '/login',
     hidden: true,
-    component: Login,
-    props: true
+    component: Login
   },
   {
     path: '/home',
-    name: '首页',
     component: Layout
   },
   {
     path: '/sys',
     name: 'sys',
     meta: {
-      name: '系统管理',
-      icon: ''
+      title: '系统管理',
+      icon: 'setting'
     },
     children: [
       {
         path: 'user',
         name: 'user',
         meta: {
-          name: '用户管理',
-          icon: ''
+          title: '用户管理',
+          icon: 'service'
         },
         component: () => import('@/views/sys/user')
       },
       {
-        path: 'role',
-        name: 'role',
+        path: 'menu',
+        name: 'menu',
         meta: {
-          name: '角色管理',
+          title: '菜单管理',
+          icon: 'menu'
+        },
+        component: () => import('@/views/sys/menu')
+      },
+      {
+        path: 'role',
+        name: 'menu',
+        meta: {
+          title: '角色管理',
           icon: ''
         },
         component: () => import('@/views/sys/role')
@@ -78,11 +69,31 @@ export const constRouterMap = [
 ]
 
 /**
- * 动态路由配置，目前不使用此方式，后期从后端获取
+ * 动态路由配置时，除了公共路由外，其他路由从$store.getters.addRouters获取
  */
-export const asyncRouterMap = [{ path: '*', redirect: '/404', hidden: true }]
+export const asyncRouterMap = [
+  {
+    path: '/404',
+    component: () => import('@/views/error/404'),
+    hidden: true
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error/401'),
+    hidden: true
+  },
+  {
+    path: '/login',
+    hidden: true,
+    component: Login
+  },
+  {
+    path: '/home',
+    component: Layout
+  }
+]
 
 export default new Router({
   scrollBehavior: () => ({ y: 0 }),
-  routes: constRouterMap
+  routes: asyncRouterMap
 })

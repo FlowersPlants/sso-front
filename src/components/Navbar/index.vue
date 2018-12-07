@@ -30,14 +30,6 @@ import NavMenu from './NavMenu'
 export default {
   name: 'navbar',
   components: { NavMenu },
-  data () {
-    return {
-      // userInfo: {
-      // username: undefined
-      // }
-    }
-  },
-  created () {},
   computed: {
     ...mapState({
       userInfo: state => state.user.info
@@ -55,11 +47,15 @@ export default {
 </script>
 
 <style>
-.navbar {
-  display: flex;
-  display: -webkit-flex;
-}
 .navbar-title {
-  width: 100%;
+  margin: 0;
+}
+.navbar-button {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+}
+.navbar-button span {
+  color: #ffffff;
 }
 </style>

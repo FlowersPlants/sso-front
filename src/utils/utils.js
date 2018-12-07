@@ -2,7 +2,6 @@ import CFG from './cfg'
 
 /**
  * 总体路由处理器
- * 待验证
  */
 export const resolveUrlPath = (url, name) => {
   let reqUrl = url

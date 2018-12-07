@@ -1,6 +1,5 @@
 # sso-front
-
-> [sso](https://github.com/FlowersPlants/sso)项目前端框架
+> 是[sso](https://github.com/FlowersPlants/sso)项目前端框架
 
 ## Build Setup
 
@@ -18,8 +17,14 @@ npm run build
 npm run build --report
 ```
 # 更新日志
+
+### 2018-12-07
+* 修复已知bug
+* 用户信息管理完成，可添加多个查询字段待完成
+
 ### 2018-12-03
 * 修复静态菜单显示问题，样式待修改
+* 路由显示问题还需调整
 
 ### 2018-12-01
 * 修复用户信息获取问题

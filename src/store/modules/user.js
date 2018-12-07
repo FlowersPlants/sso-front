@@ -40,7 +40,6 @@ const user = {
     login ({ commit }, data) {
       return new Promise((resolve, reject) => {
         UserLogin(data).then(({ data }) => {
-          console.log('login resp  ', data)
           commit('SET_ISLOGIN', true)
           commit('SET_TOKEN', data.data)
           resolve()
@@ -59,7 +58,6 @@ const user = {
               reject(new Error('error'))
             }
             const res = response.data.data
-            console.log('obtain user info => ', res)
             commit('SET_ROLES', res.roles)
             commit('SET_INFO', res.info)
             commit('SET_MENUS', res.menus)
