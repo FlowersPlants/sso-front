@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '@/components/Layout'
+import Layout from '@/views/components/Layout'
 import Login from '@/views/sys/login'
 
 Vue.use(Router)
@@ -28,43 +28,6 @@ export const constRouterMap = [
   {
     path: '/home',
     component: Layout
-  },
-  {
-    path: '/sys',
-    name: 'sys',
-    meta: {
-      title: '系统管理',
-      icon: 'setting'
-    },
-    children: [
-      {
-        path: 'user',
-        name: 'user',
-        meta: {
-          title: '用户管理',
-          icon: 'service'
-        },
-        component: () => import('@/views/sys/user')
-      },
-      {
-        path: 'menu',
-        name: 'menu',
-        meta: {
-          title: '菜单管理',
-          icon: 'menu'
-        },
-        component: () => import('@/views/sys/menu')
-      },
-      {
-        path: 'role',
-        name: 'menu',
-        meta: {
-          title: '角色管理',
-          icon: ''
-        },
-        component: () => import('@/views/sys/role')
-      }
-    ]
   }
 ]
 
@@ -90,6 +53,23 @@ export const asyncRouterMap = [
   {
     path: '/home',
     component: Layout
+  },
+  {
+    path: '/example',
+    meta: {title: '使用案例', icon: 'bug'},
+    component: Layout,
+    children: [
+      {
+        path: 'svg',
+        meta: {title: '图标', icon: 'icon'},
+        component: () => import('@/views/example/svg')
+      },
+      {
+        path: 'upload',
+        meta: {title: '文件上传', icon: 'upload'},
+        component: () => import('@/views/example/upload')
+      }
+    ]
   }
 ]
 

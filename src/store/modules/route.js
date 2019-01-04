@@ -1,5 +1,5 @@
 import { asyncRouterMap } from '@/router'
-import Layout from '@/components/Layout'
+import Layout from '@/views/components/Layout'
 
 /**
  * 递归生成路由表
@@ -23,7 +23,7 @@ function buildByRecursive (menus, root) {
         }
         temp.redirect = 'noredirect'
         temp.meta = { title: it.name, icon: it.icon }
-        temp.hidden = it.show === false
+        temp.hidden = it.hidden
         if (it.children && it.children.length) {
           if (it.children.length > 1) {
             temp.name = it.code
@@ -39,7 +39,7 @@ function buildByRecursive (menus, root) {
           temp.component = Layout
           temp.redirect = 'noredirect'
           temp.meta = { title: it.name, icon: it.icon }
-          temp.hidden = it.show === false
+          temp.hidden = it.hidden
           if (it.url && it.url.startsWith('/')) {
             it.url = it.url.substring(1, it.url.length)
           }
@@ -48,7 +48,7 @@ function buildByRecursive (menus, root) {
               path: it.url,
               component: () => import(`@/views/${it.href}`),
               name: it.code,
-              hidden: it.show === false,
+              hidden: it.hidden,
               meta: {
                 title: it.name,
                 icon: it.icon,
@@ -63,7 +63,7 @@ function buildByRecursive (menus, root) {
           temp.path = it.url
           temp.component = () => import(`@/views/${it.href}`)
           temp.name = it.code
-          temp.hidden = it.show === false
+          temp.hidden = it.hidden
           temp.meta = {
             title: it.name,
             icon: it.icon,

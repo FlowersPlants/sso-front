@@ -51,5 +51,5 @@ router.afterEach(() => {
   // NProgress.done() // finish progress bar
 })
 
-console.log('store=>', store)
+console.log('store => {}', store)
 store.dispatch('CheckLogin')

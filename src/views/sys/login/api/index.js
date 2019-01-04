@@ -2,8 +2,8 @@ import request from '@/axios/request'
 
 /**
  * 登录
- * post方式，并且数据是json格式；
- * 但是有一个问题：json格式后台接收不到
+ * post方式，并且返回json格式数据
+ * @param params {account, password} 账号和密码
  */
 export function login (params) {
   return request({

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { Navbar, Sidebar } from '@/components'
+import { Navbar, Sidebar } from '@/views/components'
 
 export default {
   name: 'layout',

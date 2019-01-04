@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './authController' // 权限控制
 
 import './assets/css/common.css'
+import '@/icons' // icon
 
 Vue.use(Element, {
   size: 'medium' // set element-ui default size

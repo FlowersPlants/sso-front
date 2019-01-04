@@ -17,6 +17,10 @@ npm run build
 npm run build --report
 ```
 # 更新日志
+### 2019-01-04
+* 角色授权成功，添加svg图标
+* 修复了一些页面显示bug，授权页面完成
+* 菜单和角色管理功能完成，分配权限功能待完成
 
 ### 2018-12-07
 * 修复已知bug
@@ -43,3 +47,4 @@ npm run build --report
 
 # 参考文档
 * 可查看[vue前端框架搭建](https://blog.csdn.net/xiaoping_1988/article/details/78768845)
+* 有关svg在vue中的使用[svg在vue里面的使用,封装一个svg组件](http://www.cnblogs.com/Jiangchuanwei/p/9386792.html)

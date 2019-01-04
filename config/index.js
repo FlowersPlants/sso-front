@@ -10,6 +10,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    // assetsPublicPath: './', // 打包时修改为此项（svg）
     proxyTable: {
       // '/api': {
       //   target: 'http://localhost:8899/',

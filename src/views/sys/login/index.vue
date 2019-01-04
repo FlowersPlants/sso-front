@@ -38,7 +38,7 @@ export default {
         rememberMe: false // 记住我功能暂无
       },
       rules: {
-        account: [{required: true, message: '请输入账号'}]
+        account: [{required: true, message: '请输入账号', trigger: 'blur'}]
       }
     }
   },

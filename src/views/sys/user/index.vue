@@ -220,7 +220,12 @@ export default {
     },
 
     genderFormatter (row) {
-      return row.gender ? '男' : '女'
+      let map = {
+        '0': '保密',
+        '1': '男',
+        '2': '女'
+      }
+      return map[row.gender]
     },
     birthdayFormatter (row) {
       return row.birthday ? parseTime(row.birthday, '{y}-{m}-{d}') : '无'
