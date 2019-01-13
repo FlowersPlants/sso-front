@@ -1,4 +1,4 @@
-import { login as UserLogin, logout } from '@/views/sys/login/api'
+import { login as UserLogin, logout } from '@/views/login/api'
 import { getUserInfo } from '@/views/sys/user/api'
 
 const user = {

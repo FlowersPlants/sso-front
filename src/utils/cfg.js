@@ -9,9 +9,9 @@ const cfg = {
       LOGO: '.static/img/logo.png'
     },
     NavMenu: [
-      { label: '首页', href: '/home', parentId: 0 },
-      { label: '操作帮助', href: 'https://***.com', parentId: 1 },
-      { label: '联系我们', href: 'mailto://*@*.com', parentId: 2 }
+      { label: '首页', href: '/home', parentId: '0' },
+      { label: '操作帮助', href: 'https://***.com', parentId: '1' },
+      { label: '联系我们', href: 'mailto://*@*.com', parentId: '2' }
     ]
   },
   sit: {
@@ -21,9 +21,9 @@ const cfg = {
       LOGO: '.static/img/logo.png'
     },
     NavMenu: [
-      { label: '首页', href: '/home', parentId: 0 },
-      { label: '操作帮助', href: 'https://***.com', parentId: 1 },
-      { label: '联系我们', href: 'mailto://*@*.com', parentId: 2 }
+      { label: '首页', href: '/home', parentId: '0' },
+      { label: '操作帮助', href: 'https://***.com', parentId: '1' },
+      { label: '联系我们', href: 'mailto://*@*.com', parentId: '2' }
     ]
   },
   prop: {
@@ -33,9 +33,9 @@ const cfg = {
       LOGO: '.static/img/logo.png'
     },
     NavMenu: [
-      { label: '首页', href: '/home', parentId: 0 },
-      { label: '操作帮助', href: 'https://***.com', parentId: 1 },
-      { label: '联系我们', href: 'mailto://*@*.com', parentId: 2 }
+      { label: '首页', href: '/home', parentId: '0' },
+      { label: '操作帮助', href: 'https://***.com', parentId: '1' },
+      { label: '联系我们', href: 'mailto://*@*.com', parentId: '2' }
     ]
   }
 }

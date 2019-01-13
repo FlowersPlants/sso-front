@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
     <div class="navbar-button is-left">
+      <breadcrumb class="breadcrumb-container"></breadcrumb>
     </div>
     <h1 class="navbar-title">
       <nav-menu></nav-menu>
@@ -26,10 +27,11 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import NavMenu from './NavMenu'
+import Breadcrumb from './Breadcrumb'
 
 export default {
   name: 'navbar',
-  components: { NavMenu },
+  components: { NavMenu, Breadcrumb },
   computed: {
     ...mapState({
       userInfo: state => state.user.info
@@ -57,5 +59,12 @@ export default {
 }
 .navbar-button span {
   color: #ffffff;
+}
+
+.breadcrumb-container {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 50px;
 }
 </style>

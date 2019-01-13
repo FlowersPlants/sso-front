@@ -14,7 +14,6 @@
       <el-table-column label="状态" :formatter="statusFormatter" width="100"></el-table-column>
       <el-table-column label="操作" fixed="right" width="210">
         <template slot-scope="props">
-          <!-- <svg-icon icon-class="user">用户</svg-icon> -->
           <el-button size="small" type="success" title="成员用户" @click="openAuthUser(props.row)" icon="el-icon-error" circle></el-button>
           <el-button size="small" type="warning" title="授权" @click="openAuth(props.row)" icon="el-icon-warning" circle></el-button>
           <el-button size="small" type="primary" title="编辑" @click="openEdit(props.row)" icon="el-icon-edit" circle></el-button>
@@ -115,6 +114,7 @@ export default {
         label: 'name'
       },
       treeData: undefined, // 树数据
+      menuList: [],
       defaultCheckedKeys: [],
       isAuthDialogVisible: false,
       roleDto: {
@@ -125,9 +125,6 @@ export default {
   },
   created () {
     this.init()
-  },
-  computed: {
-    // 计算属性
   },
   methods: {
     init () {
@@ -143,18 +140,24 @@ export default {
         this.pagination.total = Number(data.total)
       })
     },
-    loadMenuTree () {
+    loadAuthMenu (row) {
       getMenuTree().then(res => {
         const data = res.data.data
-        this.treeData = data
+        if (data) {
+          this.menuList = []
+          this.treeData = data
+          this.travelTree(data)
+          if (row.id === '1') {
+            this.defaultCheckedKeys = this.menuList.map(({id}) => id).filter(id => !!id)
+          } else {
+            getAuthMenuByRoleId(row.id).then(response => {
+              const menus = response.data.data
+              this.defaultCheckedKeys = Object.values(menus).map(({id}) => id).filter(id => !!id)
+            })
+          }
+        }
       }).catch(err => {
         console.log('获取菜单列表错误：=> {}', err)
-      })
-    },
-    loadAuthMenu (row) {
-      getAuthMenuByRoleId(row.id).then(res => {
-        const data = res.data.data
-        this.defaultCheckedKeys = Object.values(data).map(({id}) => id).filter(id => !!id)
       })
     },
 
@@ -169,7 +172,6 @@ export default {
       this.defaultCheckedKeys = []
       this.isAuthDialogVisible = true
       this.loadAuthMenu(row)
-      this.loadMenuTree()
 
       this.roleDto.id = row.id
     },
@@ -316,6 +318,16 @@ export default {
         'view': '查看'
       }
       return map[status] || '查看'
+    },
+    travelTree (data) {
+      if (data) {
+        data.forEach((e, index) => {
+          if (e) {
+            this.menuList.push(e)
+          }
+          this.travelTree(e.children)
+        })
+      }
     }
   }
 }

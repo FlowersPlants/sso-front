@@ -24,7 +24,7 @@
                   <el-tooltip class="item" effect="dark" content="编辑" placement="bottom">
                     <el-button type="text" size="mini" icon="el-icon-edit-outline" @click.stop="()=>handleEdit(data)"></el-button>
                   </el-tooltip>
-                  <el-tooltip v-if="data.parentId != 0" class="item" effect="dark" content="删除" placement="bottom">
+                  <el-tooltip v-if="data.parentId !== 0" class="item" effect="dark" content="删除" placement="bottom">
                     <el-button type="text" size="mini" icon="el-icon-delete" @click.stop="() => handleDelete(data)"></el-button>
                   </el-tooltip>
                 </span>
@@ -95,11 +95,11 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item v-if="formStatus == 'update'">
+            <el-form-item v-if="formStatus === 'update'">
               <el-button type="primary" @click="() => handleUpdate()">更新</el-button>
               <el-button @click="() => handleCancel(true)">取消</el-button>
             </el-form-item>
-            <el-form-item v-if="formStatus == 'create'">
+            <el-form-item v-if="formStatus === 'create'">
               <el-button type="primary" @click="() => handleCreate()">保存</el-button>
               <el-button @click="() => handleCancel(true)">取消</el-button>
             </el-form-item>
@@ -140,6 +140,7 @@ export default {
       form: {
         id: undefined,
         parentId: undefined,
+        parentIds: undefined,
         name: undefined,
         code: undefined,
         type: undefined,
@@ -168,8 +169,10 @@ export default {
     init () {
       getMenuTree().then(res => {
         const data = res.data.data
-        this.treeData = data
-        this.travelTree(this.treeData, '0')
+        if (data) {
+          this.treeData = data
+          this.travelTree(this.treeData, '0')
+        }
       }).catch(err => {
         console.log('获取菜单列表错误：=> {}', err)
       })
@@ -178,7 +181,7 @@ export default {
       if (!value) return true
       return data.name.indexOf(value) !== -1
     },
-    getNodeData (data, node, obj) {
+    getNodeData (data) {
       if (!this.formEdit) {
         this.formStatus = 'update'
       }
@@ -190,6 +193,7 @@ export default {
       this.form = {
         id: undefined,
         parentId: undefined,
+        parentIds: undefined,
         name: undefined,
         code: undefined,
         type: undefined,
@@ -204,6 +208,7 @@ export default {
     handleAddChild (node) {
       this.resetForm()
       this.form.parentId = node.id // 设置父节点
+      this.form.parentIds = node.parentIds + ',' + node.id
       this.formEdit = false
       this.formStatus = 'create'
     },
@@ -270,12 +275,15 @@ export default {
     },
 
     travelTree (data, parentId) {
-      for (let i in data) {
-        if (data[i].parentId === parentId) {
-          this.defaultExpandedKeys.push(data[i].id)
-        }
-        this.travelTree(data[i].children, parentId)
+      if (data == null) {
+        return
       }
+      data.forEach((e, index) => {
+        if (e.parentId === parentId) {
+          this.defaultExpandedKeys.push(e.id)
+        }
+        this.travelTree(e.children, parentId)
+      })
     }
   }
 }

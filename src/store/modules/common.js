@@ -1,5 +1,5 @@
 import CFG from '@/utils/cfg'
-import { findList } from '@/views/sys/dict/api'
+import { getDictList } from '@/views/sys/dict/api'
 
 const common = {
   state: {
@@ -16,12 +16,14 @@ const common = {
   actions: {
     initDict ({commit}) {
       return new Promise((resolve, reject) => {
-        findList()
-          .then(res => {
+        getDictList().then(res => {
+          const data = res.data.data
+          if (data) {
+            console.log('初始化全局公共数据成功：=> {}', data)
             commit('INIT_DICT', res.data.data)
             resolve()
-          })
-          .catch(e => reject(e))
+          }
+        }).catch(e => reject(e))
       })
     }
   }

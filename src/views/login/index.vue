@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     init () {
+      this.$nextTick(() => this.$refs.account.focus())
       this.resetForm()
     },
     handleLogin (loginForm) {

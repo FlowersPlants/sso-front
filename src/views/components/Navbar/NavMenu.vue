@@ -14,7 +14,7 @@
 </template>
 
 <script>
-// import { resolveUrlPath } from '@/utils/utils'
+import { resolveUrlPath } from '@/utils/utils'
 import { mapGetters } from 'vuex'
 import CFG from '@/utils/cfg'
 
@@ -33,7 +33,25 @@ export default {
   },
   methods: {
     openMenu (item) {
-      console.log('nav menu...')
+      console.log('open nav menu...')
+      let itemActive = 0
+      let childItemActive = 0
+      if (item.href) {
+        itemActive = item
+      } else {
+        if (this.menus[childItemActive].length === 0) {
+          itemActive = this.menus[childItemActive]
+        } else {
+          itemActive = this.menus[childItemActive].children[childItemActive]
+        }
+      }
+      if (itemActive.href.indexOf('mailto') !== -1) {
+        window.open(itemActive.href)
+      } else {
+        this.$router.push({
+          path: resolveUrlPath(itemActive.href, itemActive.label)
+        })
+      }
     }
   }
 }
