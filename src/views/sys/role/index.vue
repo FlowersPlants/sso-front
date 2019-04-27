@@ -15,7 +15,7 @@
       <el-table-column label="操作" fixed="right" width="210">
         <template slot-scope="props">
           <el-button size="small" type="success" title="成员用户" @click="openAuthUser(props.row)" icon="el-icon-error" circle></el-button>
-          <el-button size="small" type="warning" title="授权" @click="openAuth(props.row)" icon="el-icon-warning" circle></el-button>
+          <el-button size="small" type="warning" title="权限配置" @click="openAuth(props.row)" icon="el-icon-warning" circle></el-button>
           <el-button size="small" type="primary" title="编辑" @click="openEdit(props.row)" icon="el-icon-edit" circle></el-button>
           <el-button size="small" type="danger" title="删除" @click="handleDelete(props.row)" icon="el-icon-delete" circle></el-button>
         </template>
@@ -31,9 +31,9 @@
     </el-pagination>
 
     <el-dialog :title="dialogTitle(dialogStatus)" :visible.sync="isDialogVisible" width="60%">
-      <el-form :model="form" :rules="rules" ref="formData" label-position="right" label-width="100px">
+      <el-form :model="form" :rules="rules" ref="form" label-position="right" label-width="100px">
         <el-form-item prop="name" label="名称">
-          <el-input v-model="form.name" placeholder="角色名称"></el-input>
+          <el-input ref="name" v-model="form.name" placeholder="角色名称"></el-input>
         </el-form-item>
         <el-form-item prop="enname" label="英文名称">
           <el-input v-model="form.enname" placeholder="英文名称"></el-input>
@@ -48,7 +48,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="el-dialog-footer">
-        <el-button type="primary" @click="submitForm('formData')">保存</el-button>
+        <el-button type="primary" @click="submitForm('form')">保存</el-button>
         <el-button @click="isDialogVisible = false">取消</el-button>
       </div>
     </el-dialog>
@@ -132,8 +132,7 @@ export default {
         name: this.search.keyword,
         current: this.pagination.current,
         pageSize: this.pagination.pageSize
-      }).then(res => {
-        const data = res.data.data
+      }).then(({data}) => {
         this.roleList = data.records
         this.pagination.current = Number(data.current)
         this.pagination.pageSize = Number(data.size)
@@ -141,8 +140,7 @@ export default {
       })
     },
     loadAuthMenu (row) {
-      getMenuTree().then(res => {
-        const data = res.data.data
+      getMenuTree().then(({data}) => {
         if (data) {
           this.menuList = []
           this.treeData = data
@@ -150,7 +148,7 @@ export default {
           if (row.id === '1') {
             this.defaultCheckedKeys = this.menuList.map(({id}) => id).filter(id => !!id)
           } else {
-            getAuthMenuByRoleId(row.id).then(response => {
+            getAuthMenuByRoleId({roleId: row.id}).then(response => {
               const menus = response.data.data
               this.defaultCheckedKeys = Object.values(menus).map(({id}) => id).filter(id => !!id)
             })
@@ -166,7 +164,10 @@ export default {
       this.dialogStatus = 'create'
       this.resetForm()
 
-      this.$nextTick(() => this.$refs.formData.clearValidate())
+      this.$nextTick(() => {
+        this.$refs.name.focus()
+        this.$refs.form.clearValidate()
+      })
     },
     openAuth (row) {
       this.defaultCheckedKeys = []
@@ -185,8 +186,12 @@ export default {
       this.isDialogVisible = true
       this.dialogStatus = 'edit'
       this.form = Object.assign({}, row)
+      // 上行代码等同 this.form = { ...row }
 
-      this.$nextTick(() => this.$refs.formData.clearValidate())
+      this.$nextTick(() => {
+        this.$refs.name.focus()
+        this.$refs.form.clearValidate()
+      })
     },
 
     handleSearch () {
@@ -232,7 +237,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteRole(row.id).then(() => {
+        deleteRole({id: row.id}).then(() => {
           this.init()
           this.$notify({
             type: 'success',
@@ -246,8 +251,8 @@ export default {
         })
       })
     },
-    submitForm (formData) {
-      this.$refs[formData].validate(valid => {
+    submitForm (form) {
+      this.$refs[form].validate(valid => {
         if (valid) {
           this.handleSave()
         } else {

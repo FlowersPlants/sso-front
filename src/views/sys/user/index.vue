@@ -31,16 +31,16 @@
     </el-pagination>
 
     <el-dialog :title="dialogTitle(dialogStatus)" :visible.sync="isDialogVisible" width="60%">
-      <el-form :model="form" :rules="rules" ref="formData" label-position="right" label-width="100px">
+      <el-form :model="form" :rules="rules" ref="form" label-position="right" label-width="100px">
         <el-form-item prop="account" label="用户名">
-          <el-input v-model="form.account" placeholder="用户名"></el-input>
+          <el-input ref="account" v-model="form.account" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item prop="name" label="姓名">
           <el-input v-model="form.name" placeholder="姓名"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="el-dialog-footer">
-        <el-button type="primary" @click="submitForm('formData')">保存</el-button>
+        <el-button type="primary" @click="submitForm('form')">保存</el-button>
         <el-button @click="isDialogVisible = false">取消</el-button>
       </div>
     </el-dialog>
@@ -97,8 +97,7 @@ export default {
         name: this.search.keyword,
         current: this.pagination.current,
         pageSize: this.pagination.pageSize
-      }).then(res => {
-        const data = res.data.data
+      }).then(({data}) => {
         this.userList = data.records
         this.pagination.current = Number(data.current)
         this.pagination.pageSize = Number(data.size)
@@ -111,14 +110,21 @@ export default {
       this.dialogStatus = 'create'
       this.resetForm()
 
-      this.$nextTick(() => this.$refs.formData.clearValidate())
+      this.$nextTick(() => {
+        this.$refs.account.focus()
+        this.$refs.form.clearValidate()
+      })
     },
     openEdit (row) {
       this.isDialogVisible = true
       this.dialogStatus = 'edit'
       this.form = Object.assign({}, row)
+      // 上行代码等同 this.form = { ...row }
 
-      this.$nextTick(() => this.$refs.formData.clearValidate())
+      this.$nextTick(() => {
+        this.$refs.account.focus()
+        this.$refs.form.clearValidate()
+      })
     },
 
     handleSearch () {
@@ -167,7 +173,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteUser(row.id).then(() => {
+        deleteUser({id: row.id}).then(() => {
           this.init()
           this.$notify({
             type: 'success',
@@ -181,8 +187,8 @@ export default {
         })
       })
     },
-    submitForm (formData) {
-      this.$refs[formData].validate(valid => {
+    submitForm (form) {
+      this.$refs[form].validate(valid => {
         if (valid) {
           this.handleSave()
         } else {

@@ -44,7 +44,7 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="名称" prop="name">
-                  <el-input v-model="form.name" :disabled="formEdit" placeholder="请输入菜单名称"></el-input>
+                  <el-input ref="name" v-model="form.name" :disabled="formEdit" placeholder="请输入菜单名称"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
@@ -59,6 +59,7 @@
                   <el-radio-group v-model="form.type" :disabled="formEdit">
                     <el-radio label="0">菜单组</el-radio>
                     <el-radio label="1">菜单</el-radio>
+                    <!-- <el-radio v-for="(dict, index) in yes_no" :key="index" :label="dict.value">{{dict.label}}</el-radio> -->
                   </el-radio-group>
                 </el-form-item>
               </el-col>
@@ -111,6 +112,7 @@
 </template>
 
 <script>
+import { dict } from '@/utils/sys/dict'
 import {
   getMenuTree,
   insert,
@@ -121,6 +123,10 @@ import {
 export default {
   data () {
     return {
+      // dict
+      yes_no: [],
+      show_hidden: [],
+
       filterText: '', // 树组件内容过滤
       defaultProps: {
         children: 'children',
@@ -167,8 +173,8 @@ export default {
   },
   methods: {
     init () {
-      getMenuTree().then(res => {
-        const data = res.data.data
+      this.loadDict()
+      getMenuTree().then(({data}) => {
         if (data) {
           this.treeData = data
           this.travelTree(this.treeData, '0')
@@ -176,6 +182,10 @@ export default {
       }).catch(err => {
         console.log('获取菜单列表错误：=> {}', err)
       })
+    },
+    loadDict () {
+      this.yes_no = dict.getDictList('yes_no')
+      this.show_hidden = dict.getDictList('show_hidden')
     },
     filterNode (value, data) {
       if (!value) return true
@@ -186,6 +196,9 @@ export default {
         this.formStatus = 'update'
       }
       Object.assign(this.form, data)
+      // 上行代码等同 this.form = { ...row }
+      // 等同 this.form = Object.assign({}, data)
+
       this.formStatus = 'view'
       this.formEdit = true // 使表单不可编辑
     },
@@ -209,8 +222,19 @@ export default {
       this.resetForm()
       this.form.parentId = node.id // 设置父节点
       this.form.parentIds = node.parentIds + ',' + node.id
+
+      let children = node.children
+      if (children) {
+        let max = Math.max(...children.map(({sort}) => sort))
+        console.log('当前节点的所有子节点的最大排序号 => ', max)
+        this.form.sort = max + 30
+      }
       this.formEdit = false
       this.formStatus = 'create'
+      this.$nextTick(() => {
+        this.$refs.name.focus()
+        this.$refs.form.clearValidate()
+      })
     },
     handleEdit (data) {
       this.getNodeData(data)
@@ -218,6 +242,10 @@ export default {
         this.formEdit = false
         this.formStatus = 'update'
       }
+      this.$nextTick(() => {
+        this.$refs.name.focus()
+        this.$refs.form.clearValidate()
+      })
     },
 
     // 功能操作
@@ -228,7 +256,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteMenu(data.id).then(() => {
+        deleteMenu({id: data.id}).then(() => {
           this.init()
           this.handleCancel(true)
           this.$notify({

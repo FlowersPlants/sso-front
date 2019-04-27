@@ -2,10 +2,9 @@
  * 字典api
  */
 
-import request from '@/axios/request'
-import CFG from '@/utils/cfg'
+import request from '@/utils/request'
 
-const BASE_DICT_API = `${CFG.URL('BASE_API')}sys/dict`
+const BASE_DICT_API = `/sys/dict`
 
 /**
  * 获取所有字典，存放在store里
@@ -41,9 +40,14 @@ export function update (entity) {
   })
 }
 
-export function deleteById (id) {
+/**
+ * 根据ID删除
+ * @param {id} params 字典ID
+ */
+export function deleteById (params) {
   return request({
-    url: `${BASE_DICT_API}/${id}`,
-    method: 'delete'
+    url: `${BASE_DICT_API}`,
+    method: 'delete',
+    params
   })
 }

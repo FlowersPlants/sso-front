@@ -41,7 +41,7 @@ const user = {
       return new Promise((resolve, reject) => {
         UserLogin(data).then(({ data }) => {
           commit('SET_ISLOGIN', true)
-          commit('SET_TOKEN', data.data)
+          commit('SET_TOKEN', data)
           resolve()
         }).catch(e => {
           console.log('login error=>', e)
@@ -57,7 +57,7 @@ const user = {
             if (!response.data) {
               reject(new Error('error'))
             }
-            const res = response.data.data
+            const res = response.data
             commit('SET_ROLES', res.roles)
             commit('SET_INFO', res.info)
             commit('SET_MENUS', res.menus)

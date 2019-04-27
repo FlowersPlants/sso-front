@@ -45,9 +45,12 @@ export default {
   created () {
     this.init()
   },
+  mounted () {
+    this.$refs.account.focus()
+    this.$refs.loginForm.clearValidate()
+  },
   methods: {
     init () {
-      this.$nextTick(() => this.$refs.account.focus())
       this.resetForm()
     },
     handleLogin (loginForm) {

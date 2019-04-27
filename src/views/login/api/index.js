@@ -1,4 +1,4 @@
-import request from '@/axios/request'
+import request from '@/utils/request'
 
 /**
  * 登录

@@ -2,10 +2,9 @@
  * 菜单api
  */
 
-import request from '@/axios/request'
-import CFG from '@/utils/cfg'
+import request from '@/utils/request'
 
-const BASE_MENU_API = `${CFG.URL('BASE_API')}sys/menu`
+const BASE_MENU_API = `/sys/menu`
 
 /**
  * 获取菜单树
@@ -33,16 +32,22 @@ export function update (entity) {
   })
 }
 
-export function deleteMenu (id) {
+export function deleteMenu (params) {
   return request({
-    url: `${BASE_MENU_API}/${id}`,
-    method: 'delete'
+    url: `${BASE_MENU_API}`,
+    method: 'delete',
+    params
   })
 }
 
-export function getAuthMenuByRoleId (roleId) {
+/**
+ * 根据角色ID获取菜单
+ * @param {roleId} params 角色ID
+ */
+export function getAuthMenuByRoleId (params) {
   return request({
-    url: `${BASE_MENU_API}/${roleId}`,
-    method: 'get'
+    url: `${BASE_MENU_API}`,
+    method: 'get',
+    params
   })
 }

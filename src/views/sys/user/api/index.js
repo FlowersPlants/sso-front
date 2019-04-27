@@ -1,4 +1,8 @@
-import request from '@/axios/request'
+/**
+ * 用户API
+ */
+
+import request from '@/utils/request'
 import CFG from '@/utils/cfg'
 
 const BASE_USER_API = `${CFG.URL('BASE_API')}sys/user`
@@ -51,12 +55,13 @@ export function update (entity) {
 
 /**
  * 根据ID删除用户
- * @param {*} id 用户ID
+ * @param {*} params 用户ID
  */
-export function deleteUser (id) {
+export function deleteUser (params) {
   return request({
-    url: `${BASE_USER_API}/${id}`,
-    method: 'delete'
+    url: `${BASE_USER_API}`,
+    method: 'delete',
+    params
   })
 }
 

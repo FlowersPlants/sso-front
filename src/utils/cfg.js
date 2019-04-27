@@ -41,7 +41,6 @@ const cfg = {
 }
 
 const config = cfg[process.env.ENV_CONFIG]
-console.log('config=>', config)
 const PROXY = 'http://'
 const WS_PROXY = 'ws://'
 
