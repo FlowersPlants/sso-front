@@ -17,10 +17,10 @@ const common = {
     initDict ({commit}) {
       return new Promise((resolve, reject) => {
         getDictList().then(res => {
-          const data = res.data.data
+          const data = res.data
           if (data) {
             console.log('初始化全局公共数据成功：=> {}', data)
-            commit('INIT_DICT', res.data.data)
+            commit('INIT_DICT', data)
             resolve()
           }
         }).catch(e => reject(e))
