@@ -10,8 +10,11 @@ export const dict = {
    */
   getDictLabel (type, value, defaultValue = '') {
     const dictList = dict.getDictList()
-    if (dictList) {
-      return [dictList.find(e => e.type === type && e.value === value)].map(({label}) => label)
+    if (dictList && dictList.length) {
+      const temp = dictList.find(e => e.type === type && e.value === value)
+      if (temp) {
+        return temp.label
+      }
     }
     return defaultValue
   },
@@ -38,8 +41,11 @@ export const dict = {
    */
   getDictValue (type, label, defaultValue = '') {
     const dictList = dict.getDictList()
-    if (dictList) {
-      return [dictList.find(e => e.type === type && e.label === label)].map(({value}) => value)
+    if (dictList && dictList.length) {
+      const temp = dictList.find(e => e.type === type && e.label === label)
+      if (temp) {
+        return temp.value
+      }
     }
     return defaultValue
   },
@@ -53,10 +59,9 @@ export const dict = {
     if (type == null) {
       return list
     }
-    if (list) {
-      return list.filter(e => e.type === type) ? type : list
-    } else {
-      return null
+    if (list && list.length) {
+      return list.filter(e => e.type === type)
     }
+    return []
   }
 }

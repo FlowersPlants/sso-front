@@ -1,4 +1,4 @@
-import { asyncRouterMap } from '@/router'
+import {asyncRouterMap} from '@/router'
 import Layout from '@/views/components/Layout'
 
 /**
@@ -22,7 +22,7 @@ function buildByRecursive (menus, root) {
           temp.component = Layout
         }
         temp.redirect = 'noredirect'
-        temp.meta = { title: it.name, icon: it.icon }
+        temp.meta = {title: it.name, icon: it.icon}
         temp.hidden = it.hidden
         if (it.children && it.children.length) {
           if (it.children.length > 1) {
@@ -38,7 +38,7 @@ function buildByRecursive (menus, root) {
           temp.path = '' // it.url 双层url了
           temp.component = Layout
           temp.redirect = 'noredirect'
-          temp.meta = { title: it.name, icon: it.icon }
+          temp.meta = {title: it.name, icon: it.icon}
           temp.hidden = it.hidden
           if (it.url && it.url.startsWith('/')) {
             it.url = it.url.substring(1, it.url.length)
@@ -90,7 +90,7 @@ const route = {
     }
   },
   actions: {
-    GenerateRoutes ({ commit }, menus) {
+    GenerateRoutes ({commit}, menus) {
       return new Promise(resolve => {
         // 将后端菜单列表转换为前端路由
         let accessedRouters = buildByRecursive(menus, true)

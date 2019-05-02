@@ -3,7 +3,7 @@
  */
 const cfg = {
   dev: {
-    BASE_API: `localhost:8899/`,
+    BASE_API: `192.168.0.102:8899/`,
     WEB_INFO: {
       SITE_TITLE: 'SSO单点登录',
       LOGO: '.static/img/logo.png'
@@ -15,7 +15,7 @@ const cfg = {
     ]
   },
   sit: {
-    BASE_API: `localhost:8899/`,
+    BASE_API: `192.168.0.102:8899/`,
     WEB_INFO: {
       SITE_TITLE: 'SSO单点登录',
       LOGO: '.static/img/logo.png'
@@ -27,7 +27,7 @@ const cfg = {
     ]
   },
   prop: {
-    BASE_API: `localhost:8899/`,
+    BASE_API: `192.168.0.102:8899/`,
     WEB_INFO: {
       SITE_TITLE: 'SSO单点登录',
       LOGO: '.static/img/logo.png'

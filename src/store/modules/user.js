@@ -1,5 +1,5 @@
-import { login as UserLogin, logout } from '@/views/login/api'
-import { getUserInfo } from '@/views/sys/user/api'
+import {login as UserLogin, logout} from '@/views/login/api'
+import {getUserInfo} from '@/views/sys/user/api'
 
 const user = {
   state: {
@@ -37,9 +37,9 @@ const user = {
   },
 
   actions: {
-    login ({ commit }, data) {
+    login ({commit}, data) {
       return new Promise((resolve, reject) => {
-        UserLogin(data).then(({ data }) => {
+        UserLogin(data).then(({data}) => {
           commit('SET_ISLOGIN', true)
           commit('SET_TOKEN', data)
           resolve()
@@ -50,7 +50,7 @@ const user = {
       })
     },
     // 获取用户信息
-    GetUserInfo ({ commit }) {
+    GetUserInfo ({commit}) {
       return new Promise((resolve, reject) => {
         getUserInfo()
           .then(response => {
@@ -72,7 +72,7 @@ const user = {
     ClearToken ({commit}) {
       commit('SET_TOKEN')
     },
-    CheckLogin ({ commit }) {
+    CheckLogin ({commit}) {
       let token = localStorage.getItem('JwtToken')
       if (token) {
         commit('SET_TOKEN', token)
@@ -81,7 +81,7 @@ const user = {
       }
     },
     // 登出
-    LogOut ({ commit }) {
+    LogOut ({commit}) {
       return new Promise((resolve, reject) => {
         commit('SET_ROLES', [])
         // commit('SET_PERMS', [])

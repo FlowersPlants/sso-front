@@ -1,5 +1,5 @@
 import CFG from '@/utils/cfg'
-import { getDictList } from '@/views/sys/dict/api'
+import {getDictList} from '@/views/sys/dict/api'
 
 const common = {
   state: {

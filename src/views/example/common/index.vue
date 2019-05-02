@@ -38,7 +38,9 @@ export default {
       this.typeList = Array.from(new Set(this.dictList.map(e => e.type)))
     },
     handleSearch () {
-      this.label = dict.getDictLabel(this.type, this.value)
+      if (this.type && this.value) {
+        this.label = dict.getDictLabel(this.type, this.value)
+      }
     }
   }
 }

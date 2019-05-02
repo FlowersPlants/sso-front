@@ -26,6 +26,7 @@ export function validatAlphabets (str) {
   const reg = /^[A-Za-z]+$/
   return reg.test(str)
 }
+
 /* 验证pad还是pc */
 export const vaildatePc = function () {
   const userAgentInfo = navigator.userAgent
@@ -41,6 +42,7 @@ export const vaildatePc = function () {
   }
   return flag
 }
+
 /**
  * validate email
  * @param email
@@ -58,7 +60,7 @@ export function cardid (code) {
   let list = []
   let result = true
   let msg = ''
-  var city = {
+  const city = {
     11: '北京',
     12: '天津',
     13: '河北',
@@ -106,18 +108,18 @@ export function cardid (code) {
         code = code.split('')
         // ∑(ai×Wi)(mod 11)
         // 加权因子
-        var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+        const factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
         // 校验位
-        var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2, 'x']
-        var sum = 0
-        var ai = 0
-        var wi = 0
-        for (var i = 0; i < 17; i++) {
+        const parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2, 'x']
+        let sum = 0
+        let ai = 0
+        let wi = 0
+        for (let i = 0; i < 17; i++) {
           ai = code[i]
           wi = factor[i]
           sum += ai * wi
         }
-        var last = parity[sum % 11]
+        const last = parity[sum % 11]
         if (last !== code[17]) {
           msg = '证件号码校验位错误'
         } else {
@@ -134,6 +136,7 @@ export function cardid (code) {
   list.push(msg)
   return list
 }
+
 /**
  * 判断手机号码是否正确
  */
@@ -141,7 +144,7 @@ export function isvalidatemobile (phone) {
   let list = []
   let result = true
   let msg = ''
-  var isPhone = /^0\d{2,3}-?\d{7,8}$/
+  const isPhone = /^0\d{2,3}-?\d{7,8}$/
   // 增加134 减少|1349[0-9]{7}，增加181,增加145，增加17[678]
   // var isMob = /^((\+?86)|(\(\+86\))÷)?(13[0123456789][0-9]{8}|15[012356789][0-9]{8}|18[012356789][0-9]{8}|14[57][0-9]{8}|17[3678][0-9]{8})$/
   if (!validatenull(phone)) {
@@ -161,14 +164,15 @@ export function isvalidatemobile (phone) {
   list.push(msg)
   return list
 }
+
 /**
  * 判断姓名是否正确
  */
 export function validatename (name) {
-  var regName = /^[\u4e00-\u9fa5]{2,4}$/
-  if (!regName.test(name)) return false
-  return true
+  const regName = /^[\u4e00-\u9fa5]{2,4}$/
+  return regName.test(name)
 }
+
 /**
  * 判断是否为整数
  */
@@ -182,6 +186,7 @@ export function validatenum (num, type) {
   }
   return true
 }
+
 /**
  * 判断是否为小数
  */
@@ -195,6 +200,7 @@ export function validatenumord (num, type) {
   }
   return true
 }
+
 /**
  * 判断是否为空
  */
@@ -204,8 +210,7 @@ export function validatenull (val) {
   } else if (val instanceof Object) {
     if (JSON.stringify(val) === '{}') return true
   } else {
-    if (val === 'null' || val == null || val === 'undefined' || val === undefined || val === '') return true
-    return false
+    return val === 'null' || val == null || val === 'undefined' || val === undefined || val === ''
   }
   return false
 }

@@ -1,7 +1,7 @@
 import router from '@/router'
 import store from '@/store'
 import CFG from '@/utils/cfg'
-import { initUserRouter } from '@/store/actions/sys'
+import {initUserRouter} from '@/store/actions/sys'
 
 const whiteList = ['/login'] // no redirect whitelist
 
@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
     if (whiteList.indexOf(to.path) > -1) {
       next()
     } else {
-      next({ path: '/login' })
+      next({path: '/login'})
     }
   } else if (!store.getters.userInfo) {
     initUserRouter(to, from, next)

@@ -1,6 +1,6 @@
 import store from '@/store'
 import router from '@/router'
-import { MessageBox } from 'element-ui'
+import {MessageBox} from 'element-ui'
 
 /**
  * 初始化全局公共数据（字典）
